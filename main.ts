@@ -1,9 +1,12 @@
 
+const size = 4;
+
 class MyPixelShader extends affine.Gpu.PixelShader {
-    shade(p: affine.Vec2, uv: affine.Vec2): number {
-        const x = Fx.toInt(p.x) >> 3;
-        const y = Fx.toInt(p.y) >> 3;
+    shade(pos: affine.Vec2, uv: affine.Vec2): number {
+        const x = Fx.toInt(pos.x) >> size;
+        const y = Fx.toInt(pos.y) >> size;
         return (x + y) % 2 == 0 ? 1 : 2;
+        //return (x + y) % 3 == 0 ? 13 : (x + y) % 2 ? 5 : 6;
     }
 }
 
