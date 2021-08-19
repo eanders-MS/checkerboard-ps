@@ -1,8 +1,8 @@
 
 class MyPixelShader extends affine.Gpu.PixelShader {
     shade(p: affine.Vec2, uv: affine.Vec2): number {
-        let x = Fx.toInt(p.x) >> 3;
-        let y = Fx.toInt(p.y) >> 3;
+        const x = Fx.toInt(p.x) >> 3;
+        const y = Fx.toInt(p.y) >> 3;
         return (x + y) % 2 == 0 ? 1 : 2;
     }
 }
