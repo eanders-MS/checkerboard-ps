@@ -1,9 +1,9 @@
 {
-    "name": "checkerboard-ps",
+    "name": "checkerboard-ps - Copy",
     "description": "",
     "dependencies": {
         "device": "*",
-        "affine": "github:eanders-MS/affine#be340ebf33788a243af28375cbc01a93b1eb2a3c"
+        "affine": "github:eanders-MS/affine#8fb9180a3a3950570d2b981d36408288b72094a3"
     },
     "files": [
         "main.blocks",
