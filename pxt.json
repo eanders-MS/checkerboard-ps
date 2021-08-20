@@ -1,5 +1,5 @@
 {
-    "name": "checkerboard-ps - Copy",
+    "name": "checkerboard-ps",
     "description": "",
     "dependencies": {
         "device": "*",
