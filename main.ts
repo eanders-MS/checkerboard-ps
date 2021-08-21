@@ -1,6 +1,6 @@
 
 let method = 0;
-let N_METHODS = 4;
+let N_METHODS = 3;
 
 class MyPixelShader extends affine.Gpu.PixelShader {
     shade(pos: affine.Vec2, uv: affine.Vec2): number {
@@ -18,16 +18,12 @@ class MyPixelShader extends affine.Gpu.PixelShader {
                 return (x + y) % 3 == 0 ? 13 : (x + y) % 2 ? 5 : 6;
             }
             case 2: {
-                const x = Fx.toInt(pos.x);
-                const y = Fx.toInt(pos.y);
-                return Math.floor(1 + (Math.abs(Math.sin(x * y)) * 15));
-            }
-            case 3: {
-                const x = Fx.toInt(pos.x);
-                const y = Fx.toInt(pos.y);
+                const x = Fx.toInt(pos.x) >> 2;
+                const y = Fx.toInt(pos.y) >> 2;
+                const t = control.millis() / 1000;
                 const s = Math.sin(x);
-                const c = Math.cos(y);
-                return Math.floor(1 + (Math.abs(s * c) * 15));
+                const c = Math.cos(y + t);
+                return Math.floor(1 + (Math.abs(s * c) * 3));
             }
             default: return 0;
         }
