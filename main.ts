@@ -1,12 +1,36 @@
 
-const size = 4;
+let method = 0;
+let N_METHODS = 4;
 
 class MyPixelShader extends affine.Gpu.PixelShader {
     shade(pos: affine.Vec2, uv: affine.Vec2): number {
-        const x = Fx.toInt(pos.x) >> size;
-        const y = Fx.toInt(pos.y) >> size;
-        return (x + y) % 2 == 0 ? 1 : 2;
-        //return (x + y) % 3 == 0 ? 13 : (x + y) % 2 ? 5 : 6;
+        switch (method) {
+            case 0: {
+                const size = 4;
+                const x = Fx.toInt(pos.x) >> size;
+                const y = Fx.toInt(pos.y) >> size;
+                return (x + y) % 2 == 0 ? 1 : 2;
+            }
+            case 1: {
+                const size = 2;
+                const x = Fx.toInt(pos.x) >> size;
+                const y = Fx.toInt(pos.y) >> size;
+                return (x + y) % 3 == 0 ? 13 : (x + y) % 2 ? 5 : 6;
+            }
+            case 2: {
+                const x = Fx.toInt(pos.x);
+                const y = Fx.toInt(pos.y);
+                return Math.floor(1 + (Math.abs(Math.sin(x * y)) * 15));
+            }
+            case 3: {
+                const x = Fx.toInt(pos.x);
+                const y = Fx.toInt(pos.y);
+                const s = Math.sin(x);
+                const c = Math.cos(y);
+                return Math.floor(1 + (Math.abs(s * c) * 15));
+            }
+            default: return 0;
+        }
     }
 }
 
@@ -36,6 +60,7 @@ class MyScene extends affine.Scene {
         controller.A.onEvent(ControllerButtonEvent.Repeated, () => this.rotateClockwise());
         controller.B.onEvent(ControllerButtonEvent.Pressed, () => this.rotateCounterClockwise());
         controller.B.onEvent(ControllerButtonEvent.Repeated, () => this.rotateCounterClockwise());
+        controller.menu.onEvent(ControllerButtonEvent.Pressed, () => this.cycleMethod());
     }
 
     draw() {
@@ -44,6 +69,11 @@ class MyScene extends affine.Scene {
 
     moveSpeed = Fx8(2);
     rotSpeed = 2;
+    
+    cycleMethod() {
+        method++;
+        method %= N_METHODS;
+    }
 
 
     moveUp() {
